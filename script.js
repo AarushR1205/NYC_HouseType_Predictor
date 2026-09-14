@@ -2,7 +2,7 @@
 // CONFIG
 // ============================================================
 
-const API_BASE_URL = "https://nyc-housetype-predictor-1.onrender.com";
+const API_BASE_URL = "https://nyc-housetype-predictor.onrender.com";
 const PREDICT_ENDPOINT = `${API_BASE_URL}/predict`;
 const HEALTH_ENDPOINT = `${API_BASE_URL}/health`;
 
