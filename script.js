@@ -3,7 +3,6 @@
 // ============================================================
 
 const API_BASE_URL = "https://nyc-housetype-predictor-1.onrender.com";
-
 const PREDICT_ENDPOINT = `${API_BASE_URL}/predict`;
 const HEALTH_ENDPOINT = `${API_BASE_URL}/health`;
 
@@ -142,7 +141,6 @@ if (availabilityInput && availabilityValue) {
 if (exampleBtn) {
     exampleBtn.addEventListener("click", () => {
         const data = EXAMPLES[exampleIndex % EXAMPLES.length];
-
         exampleIndex++;
 
         Object.entries(data).forEach(([key, value]) => {
@@ -296,10 +294,7 @@ function collectPayload() {
         latitude: parseFloat(fd.get("latitude")),
         longitude: parseFloat(fd.get("longitude")),
         price: parseFloat(fd.get("price")),
-        minimum_nights: parseInt(
-            fd.get("minimum_nights"),
-            10
-        ),
+        minimum_nights: parseInt(fd.get("minimum_nights"), 10),
         number_of_reviews: parseInt(
             fd.get("number_of_reviews"),
             10
@@ -405,10 +400,7 @@ function renderResult(result) {
 
     const paired = ROOM_CLASSES.map((cls, i) => ({
         ...cls,
-        prob:
-            typeof probs[i] === "number"
-                ? probs[i]
-                : 0
+        prob: typeof probs[i] === "number" ? probs[i] : 0
     }));
 
     // --------------------------------------------------------
@@ -444,20 +436,14 @@ function buildBuildings(paired, predicted) {
 
     paired.forEach((cls) => {
         const col = document.createElement("div");
-
         col.className = "building-col";
 
         const b = document.createElement("div");
-
         b.className = "building";
-
         b.style.setProperty("--h", "18%");
 
         const totalWindows = cls.rows * cls.cols;
-
-        const litCount = Math.round(
-            totalWindows * cls.prob
-        );
+        const litCount = Math.round(totalWindows * cls.prob);
 
         // ----------------------------------------------------
         // Create windows
@@ -465,7 +451,6 @@ function buildBuildings(paired, predicted) {
 
         for (let i = 0; i < totalWindows; i++) {
             const win = document.createElement("div");
-
             win.className = "win";
 
             b.appendChild(win);
@@ -476,7 +461,6 @@ function buildBuildings(paired, predicted) {
         // ----------------------------------------------------
 
         const caption = document.createElement("div");
-
         caption.className = "building-caption";
         caption.textContent = cls.label;
 
@@ -501,9 +485,7 @@ function buildBuildings(paired, predicted) {
                             () => {
                                 w.classList.add("lit");
                             },
-                            REDUCE_MOTION
-                                ? 0
-                                : 60 * i + 300
+                            REDUCE_MOTION ? 0 : 60 * i + 300
                         );
                     }
                 });
@@ -540,21 +522,17 @@ function buildProbList(paired, predicted) {
             (cls.key === predicted ? " top" : "");
 
         const name = document.createElement("span");
-
         name.className = "name";
         name.textContent = cls.label;
 
         const value = document.createElement("span");
-
         value.className = "value";
         value.textContent = "0%";
 
         const track = document.createElement("div");
-
         track.className = "prob-track";
 
         const fill = document.createElement("div");
-
         fill.className = "prob-fill";
 
         track.appendChild(fill);
@@ -570,7 +548,6 @@ function buildProbList(paired, predicted) {
         requestAnimationFrame(() => {
             setTimeout(() => {
                 fill.style.width = `${pct}%`;
-
                 animateCount(value, pct);
             }, REDUCE_MOTION ? 0 : 150);
         });
@@ -596,8 +573,7 @@ function animateCount(el, target) {
             (now - start) / duration
         );
 
-        const eased =
-            1 - Math.pow(1 - t, 3);
+        const eased = 1 - Math.pow(1 - t, 3);
 
         el.textContent =
             `${Math.round(target * eased)}%`;
@@ -667,10 +643,7 @@ async function checkApiStatus() {
 // INITIALIZATION
 // ============================================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-        buildSkylineLights();
-        checkApiStatus();
-    }
-);
+document.addEventListener("DOMContentLoaded", () => {
+    buildSkylineLights();
+    checkApiStatus();
+});

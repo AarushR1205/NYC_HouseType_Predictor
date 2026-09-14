@@ -43,7 +43,7 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "Healthy"}
+    return {"status": "healthy"}
 
 @app.post("/predict")
 def predict(features: Features):
@@ -51,6 +51,6 @@ def predict(features: Features):
     prediction = model.predict(row)
     probability = model.predict_proba(row)
     return {
-        "Predicted_room_type" : prediction[0],
-        "Probability" : probability.tolist()[0]
+        "Predicted_room_type": str(prediction[0]),
+        "Probability": probability[0].tolist(),
     }
