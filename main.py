@@ -36,7 +36,14 @@ class Features(BaseModel):
 
 @app.get("/")
 def root():
-    return {"message" : "Welcome to the Home Page!!!"}
+    return {
+        "message" : "Welcome to the Home Page!!!",
+        "status" : "OK"
+    }
+
+@app.get("/health")
+def health():
+    return {"status": "Healthy"}
 
 @app.post("/predict")
 def predict(features: Features):
@@ -44,6 +51,6 @@ def predict(features: Features):
     prediction = model.predict(row)
     probability = model.predict_proba(row)
     return {
-        "Predicted room type" : prediction[0],
+        "Predicted_room_type" : prediction[0],
         "Probability" : probability.tolist()[0]
     }
